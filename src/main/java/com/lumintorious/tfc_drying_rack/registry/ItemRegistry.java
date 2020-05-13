@@ -12,6 +12,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(modid = TFCDryingRack.MODID)
 public class ItemRegistry {
@@ -22,6 +24,7 @@ public class ItemRegistry {
 		FRAME;
 	
 	@SubscribeEvent
+//	@SideOnly(Side.CLIENT)
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 
 		event.getRegistry().registerAll(ITEMS.toArray(new Item[0]));
@@ -39,12 +42,12 @@ public class ItemRegistry {
 		return item;
 	}
 
-
+//	@SideOnly(Side.CLIENT)
 	public static void registerModel(Item item, String id) {
 		if(item instanceof ItemBase) {
 			((ItemBase)item).registerModel(id);
 		}else {
-			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), id));
+			TFCDryingRack.proxy.registerItemRenderer(item, 0, id);;
 		}
 	}
 
